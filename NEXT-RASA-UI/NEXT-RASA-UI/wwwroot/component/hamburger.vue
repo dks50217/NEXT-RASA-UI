@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 0 15px;" @click="toggleClick">
+  <div style="padding: 0 15px;" v-on:click="toggleClick">
     <svg
       :class="{'is-active':isActive}"
       class="hamburger"
@@ -15,7 +15,7 @@
 
 <script>
 module.exports = {
-  name: 'Hamburger',
+  name: 'hamburger',
   props: {
     isActive: {
       type: Boolean,
@@ -24,7 +24,7 @@ module.exports = {
   },
   methods: {
     toggleClick() {
-      this.$emit('toggleClick')
+        this.$emit('toggleclick')
     }
   }
 }
