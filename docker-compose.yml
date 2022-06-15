@@ -1,0 +1,43 @@
+version: "2.0"
+
+services:
+  rasa:
+    image: rasa/rasa:latest-full
+    user: root
+    container_name: rasa
+    networks: ['rasa-network']
+    ports:
+    - "5005:5005"
+    volumes:
+    - /opt/rasa/rasa-server:/app
+    command: 
+      - run
+      - --enable-api
+      - --debug
+      - --cors
+      - "*"
+  rasa_ui:       
+    image: paschmann/rasa-ui:latest
+    user: root
+    container_name: rasa_ui
+    networks: ['rasa-network']
+    ports:
+      - "5001:5001"
+    depends_on:
+      - "rasa"
+    environment:
+      rasa_endpoint: "http://rasa:5005"
+  
+  rasa_chat:
+    image : nginx
+    user: root
+    container_name: rasa_chat
+    networks: ['rasa-network']
+    ports:
+      - "5003:80"
+    volumes:
+      - /opt/rasa/rasa-chat:/app
+    depends_on:
+      - "rasa"
+
+networks: {rasa-network: {}}
