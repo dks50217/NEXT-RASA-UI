@@ -29,14 +29,14 @@ services:
       rasa_endpoint: "http://rasa:5005"
   
   rasa_chat:
-    image : nginx
+    image : nginx:1.19
     user: root
     container_name: rasa_chat
     networks: ['rasa-network']
     ports:
       - "5003:80"
     volumes:
-      - /opt/rasa/rasa-chat:/app
+      - /opt/rasa/rasa-chat:/usr/share/nginx/html
     depends_on:
       - "rasa"
 
